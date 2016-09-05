@@ -1,0 +1,1 @@
+create table user_favorite_questions (question_id BIGINT(20) NOT NULL, forumuser_id BIGINT(20) NOT NULL);

@@ -1,0 +1,1 @@
+<h1>404 admin page not found</h1>

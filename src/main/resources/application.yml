@@ -1,0 +1,131 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@,secrets,secrets-@spring.profiles.active@
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: @datasource.url@
+    username: @datasource.username@
+    password: @datasource.password@
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
+  
+solr:
+  standalone:
+    url: http://fs24test:8983/solr/expert-forum
+  embedded:
+    url: classpath:solr
+
+server.context-path: @app.contextPath@
+#  port: 8080
+#  ssl:
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+  
+
+flyway:
+  url: @datasource.url@
+  user: @datasource.username@
+  password: @datasource.password@
+  validateOnMigrate: false
+#amazon:
+#  dynamodb:
+#    endpoint:
+#  aws:
+#    accesskey:
+#    secretkey:
+
+exfo:
+ mail:
+  from: expert-forum@financescout24.de
+ baseUrl: @app.host@@app.contextPath@/
+ sso:
+   baseUrl: https://exfo.sandbox-immobilienscout24.de:8444/auth/
+   authenticationPath: public/principal
+
+---
+
+spring:
+  profiles: local
+  mail:
+    host: 192.168.154.23
+    
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:ssl/keystore.p12
+    key-store-type: PKCS12
+    key-alias: tomcat
+
+flyway.locations: classpath:db/migration/ddl, classpath:db/migration/data, classpath:db/migration/test-data     
+
+exfo.tomcat.proxy.name: localhost
+logging.level.org.springframework.data: DEBUG
+logging.level.de.scout24.financing: DEBUG
+logging.level.org.springframework.web: DEBUG
+logging.level.org.springframework.security: DEBUG
+
+exfo:
+ mail:
+  subjectprefix: (local)
+
+---
+
+spring:
+  profiles: dev
+  mail:
+    host: mx03.fs24.local
+  config.location: /opt/exfo/
+    
+server.tomcat:
+    basedir: /opt/tomcat
+    accesslog.enabled: true
+
+flyway.locations: classpath:db/migration/ddl, classpath:db/migration/data, classpath:db/migration/test-data     
+  
+exfo:
+ mail:
+  subjectprefix: (dev)
+
+---
+
+spring:
+  profiles: stage
+  mail:
+    host: mx03.fs24.local
+  config.location: /opt/exfo/
+
+server.tomcat:
+    basedir: /opt/tomcat
+    accesslog.enabled: true
+
+flyway:
+  locations: classpath:db/migration/ddl, classpath:db/migration/data
+  enabled: true #set to false after initial migration
+
+exfo:
+ mail:
+  subjectprefix: (stage)
+  
+---
+
+spring:
+  profiles: prod
+  mail:
+    host: mx03.fs24.local
+  config.location: /opt/exfo/
+
+server.tomcat:
+    basedir: /opt/tomcat
+    accesslog.enabled: true
+
+flyway:
+  locations: classpath:db/migration/ddl, classpath:db/migration/data
+  enabled: true #set to false after initial migration
+
+exfo:
+ mail:
+  subjectprefix:
+

@@ -1,0 +1,213 @@
+#ExpertForum .page-wrapper{
+border: none;
+}
+#ExpertForum .content-wrapper{
+    padding: 0;
+}
+.pointer{
+    cursor: pointer;
+}
+.font-lightblue
+{
+   color: #0099FF;
+}
+.font-blue
+{
+    color: #0066CC;
+}
+.font-xss
+{
+    font-size: 10px;
+}
+.background-lightblue
+{
+    background-color: #D1EDF6;
+}
+.background-error-dark
+{
+    background-color: #b80000;
+    color:#ffffff
+}
+
+.background-confirm-dark
+{
+    background-color: #1a6600!important;
+    color:#ffffff
+}
+.background-warning-dark
+{
+    background-color:#662505!important;
+    color:#ffffff
+}
+
+
+/*.input-text-area
+{
+    height:7em;
+    width: 100%;
+}
+.input-text-area-xl
+{
+    height:10em;
+    width: 100%;
+}*/
+form.submitted .ng-invalid
+{
+    border:1px solid #FF6600;
+}
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.fa-rotate-30 {
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
+}
+.fa-rotate-60 {
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    -ms-transform: rotate(60deg);
+    -o-transform: rotate(60deg);
+    transform: rotate(60deg);
+}
+.fa-rotate-120 {
+    -webkit-transform: rotate(120deg);
+    -moz-transform: rotate(120deg);
+    -ms-transform: rotate(120deg);
+    -o-transform: rotate(120deg);
+    transform: rotate(120deg);
+}
+
+/*NavigationBar style*/
+
+#navigationBar > div{
+    text-align: center;
+}
+#navigationBar a{
+    color: #969696;
+    font-size: 2.4rem;
+    text-align: center;
+}
+#navigationBar a:hover{
+    color: #ff7500;
+}
+#navigationBar a:link{
+    text-decoration: none;
+}
+
+#navigationBar .searchButton {
+    background-color: #2BA000;
+    color: #fff;
+    width: 50px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 2em;
+    text-align: center;
+    font-size: 2.1rem;
+    cursor: pointer;
+}
+
+#navigationBar #searchButton2{
+    top: 26px;
+}
+
+#navigationBar #searchBar{
+    /*display: none;*/
+    position: absolute;
+    margin-top: 15px;
+    left: 0;
+}
+
+.questionList ul{
+    border:1px solid #e0e0e0;
+}
+.questionList ul li{
+    border-top:1px solid #e0e0e0;
+    background-color: #f6f6f6;
+}
+.questionSortBar .lastIcon{
+    margin-left: -15px;
+}
+/*//border-left border-right border-bottom*/
+/*lap*/
+@media (min-width: 670px) {
+    #ExpertForum .content-wrapper{
+        padding: 8px;
+    }
+    #navigationBar{
+    }
+
+    #navigationBar a{
+        font-size: 2rem;
+    }
+
+    .questionList ul, .questionList ul li{
+        border: none;
+        background: none;
+    }
+    .questionList ul li {
+        margin-top: 25px;
+    }
+    /*.questionList ul li a{
+        font-size: 24px;
+    }*/
+}
+#ExpertForum #topInfo strong{
+    display: block;
+}
+/*desk*/
+@media (min-width: 1014px) {
+
+    #ExpertForum .content-wrapper{
+        padding: 16px;
+    }
+
+    #navigationBar .searchBarFull{
+
+        background-image: url("../images/bg_lap.jpg");
+        /*background-color: darkgrey;*/
+        color: #fff;
+    }
+    #navigationBar > div{
+        text-align: left;
+    }
+    #navigationBar a{
+        font-size: 1.6rem;
+    }
+
+    #navigationBar .searchBarFull a{
+        color: #fff;
+    }
+
+    #ExpertForum #topInfo strong{
+        display: inline-block;
+    }
+
+    #ExpertForum #topInfo-userName{
+        font-size: 2.6rem;
+    }
+    #ExpertForum #topInfo-date{
+        display: block;
+    }
+
+
+}
+
+/* END NavigationBar style*/
+
+
+.circle {
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    /* width and height can be anything, as long as they're equal */
+}
+

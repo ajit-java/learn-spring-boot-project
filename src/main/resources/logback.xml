@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />-->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>192.168.154.23</smtpHost>
+
+        <to>application.error@scout24services.de</to>
+        <from>expert-forum-error@financescout24.de</from>
+        <subject>Expert-forum Exception ${spring.profiles.active} - [${HOSTNAME}]</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--<pattern>%date %-5level %logger - %message%n%xEx</pattern>-->
+            <Pattern>%d - %-0level - [%thread]%n%n Requester IP: %X{req.remoteHost}%n Requested Uri: %X{req.requestURI}%n Request Url: %X{req.requestURL}%n Query String: %X{req.queryString}%n User agent: %X{req.userAgent}%n Request Method: %X{req.method}%n Forwarded For: %X{req.xForwardedFor}%n%n %logger{20}%n%n - %msg %n</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="de.scout24.financing" level="ERROR">
+        <appender-ref ref="EMAIL" />
+    </logger>
+
+    <!--<root level="ERROR">-->
+        <!--<appender-ref ref="EMAIL" />-->
+    <!--</root>-->
+</configuration>

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>de.scout24.financing</groupId>
+	<artifactId>expert-forum</artifactId>
+	<version>0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>expert-forum</name>
+	<description>Expert forum for multiple categories</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.0.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>local</spring.profiles.active>
+				<app.host>https://exfo.financescout24.loc:8443</app.host>
+				<app.contextPath>/expertforum</app.contextPath>
+				<datasource.url>jdbc:mysql://localhost/efo</datasource.url>
+				<datasource.username>exfo</datasource.username>
+                <datasource.password>exfo</datasource.password>
+				<skipMinify>true</skipMinify>
+				<loginPath>https:///sso.sandbox-immobilienscout24.de/sso/authenticate?appName=expertenforum&amp;sso_return={0}</loginPath>
+				<fs24AuthApiPath>https:///exfo.sandbox-immobilienscout24.de:8444/auth/security/sso_login?original-resource={0}</fs24AuthApiPath>
+				<logOutPath>https:///sso.sandbox-immobilienscout24.de/sso/logout?sso_return={0}</logOutPath>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+				<app.host>https://www.financescout24.dev</app.host>
+				<app.contextPath>/expertforum</app.contextPath>
+                <datasource.url>jdbc:mysql://exfodb01dev.fs24.local/exfo</datasource.url>
+                <datasource.username>exfouser</datasource.username>
+                <datasource.password>exfo</datasource.password>
+				<skipMinify>false</skipMinify>
+				<loginPath>https:///sso.sandbox-immobilienscout24.de/sso/authenticate?appName=expertenforum&amp;sso_return={0}</loginPath>
+				<fs24AuthApiPath>https:///exfo.sandbox-immobilienscout24.de:8444/auth/security/sso_login?original-resource={0}</fs24AuthApiPath>
+				<logOutPath>https:///sso.sandbox-immobilienscout24.de/sso/logout?sso_return={0}</logOutPath>
+			</properties>
+		</profile>
+		<profile>
+			<id>stage</id>
+			<properties>
+				<spring.profiles.active>stage</spring.profiles.active>
+				<app.host>https://www.financescout24.stage</app.host>
+				<app.contextPath>/expertforum</app.contextPath>
+                <datasource.url>jdbc:mysql://exfodb01stage.fs24.local/exfo</datasource.url>
+                <datasource.username>exfouser</datasource.username>
+                <datasource.password>exfo</datasource.password>
+				<skipMinify>false</skipMinify>
+				<loginPath>https:///sso.sandbox-immobilienscout24.de/sso/authenticate?appName=expertenforum&amp;sso_return={0}</loginPath>
+				<fs24AuthApiPath>https:///exfo.sandbox-immobilienscout24.de:8444/auth/security/sso_login?original-resource={0}</fs24AuthApiPath>
+				<logOutPath>https:///sso.sandbox-immobilienscout24.de/sso/logout?sso_return={0}</logOutPath>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+				<app.host>https://www.financescout24.de</app.host>
+				<app.contextPath>/expertforum</app.contextPath>
+                <datasource.url>jdbc:mysql://exfodb01live.fs24.local/exfo</datasource.url>
+                <datasource.username>exfouser</datasource.username>
+                <datasource.password>exfo</datasource.password>
+				<skipMinify>false</skipMinify>
+				<loginPath>https:///sso.immobilienscout24.de/sso/authenticate?appName=expertenforum&amp;sso_return={0}</loginPath>
+				<fs24AuthApiPath>https:///exfo.immobilienscout24.de:8444/auth/security/sso_login?original-resource={0}</fs24AuthApiPath>
+				<logOutPath>https:///sso.immobilienscout24.de/sso/logout?sso_return={0}</logOutPath>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<solr.version>4.7.2</solr.version>
+		<js-tests.skip>false</js-tests.skip>
+		<js-libs>${basedir}/src/main/resources/static/scripts/libs</js-libs>
+        <powermock.version>1.6.3</powermock.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!--<dependency> -->
+		<!--<groupId>org.springframework.cloud</groupId> -->
+		<!--<artifactId>spring-cloud-starter-aws</artifactId> -->
+		<!--</dependency> -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-solr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>${solr.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>jdk.tools</groupId>
+					<artifactId>jdk.tools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty.orbit</groupId>
+					<artifactId>javax.servlet</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>jetty-server</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--database -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.4</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs</artifactId>
+			<version>1.0.0.M1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework.cloud</groupId> 
+		<artifactId>spring-cloud-starter-parent</artifactId> <version>Angel.SR3</version> 
+		<type>pom</type> <scope>import</scope> </dependency> </dependencies> </dependencyManagement> -->
+	<build>
+	   <finalName>expertforum</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.p12</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.p12</include>
+				</includes>
+			</resource>
+		</resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.p12</exclude>
+                </excludes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.p12</include>
+                </includes>
+            </testResource>
+        </testResources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.samaxes.maven</groupId>
+					<artifactId>minify-maven-plugin</artifactId>
+					<version>1.7.4</version>
+					<executions>
+						<execution>
+							<id>default-minify</id>
+							<!--<phase>package</phase> -->
+							<configuration>
+								<charset>UTF-8</charset>
+								<verbose>true</verbose>
+								<skipMinify>${skipMinify}</skipMinify>
+								<nosuffix>true</nosuffix>
+								<webappSourceDir>${basedir}/src/main/resources/static</webappSourceDir>
+								<webappTargetDir>${basedir}/src/main/resources/static</webappTargetDir>
+								<cssSourceDir>css</cssSourceDir>
+								<cssSourceFiles>
+									<cssSourceFile>forum.css</cssSourceFile>
+								</cssSourceFiles>
+								<jsSourceDir>scripts</jsSourceDir>
+								<jsSourceFiles>
+									<!--<jsSourceFile>libs/scout24/core.min.js</jsSourceFile> -->
+									<jsSourceFile>app/common/globalSettings.js</jsSourceFile>
+									<jsSourceFile>app/modules/ExpertForum.js</jsSourceFile>
+									<jsSourceFile>app/common/models.js</jsSourceFile>
+									<jsSourceFile>app/services/efoRestService.js</jsSourceFile>
+									<jsSourceFile>app/services/authService.js</jsSourceFile>
+									<jsSourceFile>app/directives/CommonDirectives.js</jsSourceFile>
+									<jsSourceFile>app/directives/CommentDirective.js</jsSourceFile>
+									<jsSourceFile>app/directives/NavigationBarDirective.js</jsSourceFile>
+									<jsSourceFile>app/directives/answerQuestionDirective.js</jsSourceFile>
+									<jsSourceFile>app/controllers/questionsController.js</jsSourceFile>
+									<jsSourceFile>app/controllers/miscController.js</jsSourceFile>
+									<jsSourceFile>app/controllers/homeController.js</jsSourceFile>
+									<jsSourceFile>app/controllers/profileController.js</jsSourceFile>
+									<jsSourceFile>app/controllers/authController.js</jsSourceFile>
+									<jsSourceFile>app/modules/navigation.js</jsSourceFile>
+								</jsSourceFiles>
+								<jsEngine>YUI</jsEngine>
+								<!--<closureLanguage>ECMASCRIPT5</closureLanguage> -->
+							</configuration>
+							<goals>
+								<goal>minify</goal>
+							</goals>
+						</execution>
+
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+					<addResources>false</addResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<url>${datasource.url}</url>
+					<user>${datasource.username}</user>
+					<password>${datasource.password}</password>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.samaxes.maven</groupId>
+				<artifactId>minify-maven-plugin</artifactId>
+			</plugin>
+			<!--<plugin> -->
+			<!--<groupId>com.github.searls</groupId> -->
+			<!--<artifactId>jasmine-maven-plugin</artifactId> -->
+			<!--<version>2.0</version> -->
+			<!--<executions> -->
+			<!--<execution> -->
+			<!--<goals> -->
+			<!--<goal>test</goal> -->
+			<!--</goals> -->
+			<!--</execution> -->
+			<!--</executions> -->
+			<!--<configuration> -->
+			<!--<skipJasmineTests>${js-tests.skip}</skipJasmineTests> -->
+			<!--<jsSrcDir>${basedir}/src/main/resources/static/app</jsSrcDir> -->
+			<!--<jsTestSrcDir>${basedir}/src/test/javascript</jsTestSrcDir> -->
+			<!--<preloadSources> -->
+			<!--<source>${js-libs}/angular/angular.min.js</source> -->
+			<!--<source>${js-libs}/angular/angular-route.min.js</source> -->
+			<!--<source>${js-libs}/angular/angular-sanatize.min.js</source> -->
+			<!--<source>${js-libs}/angular/angular-resource.min.js</source> -->
+			<!--<source>${js-libs}/angular/angular-mocks.js</source> -->
+			<!--<source>${js-libs}/angular/angular-resource.min.js</source> -->
+			<!--<source>//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js</source> -->
+			<!--<source>${basedir}/src/main/resources/static/scripts/app/common/globalSettings.js</source> -->
+			<!--<source>${basedir}/src/main/resources/static/scripts/app/modules/ExpertForum.js</source> -->
+			<!--</preloadSources> -->
+			<!--</configuration> -->
+			<!--</plugin> -->
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-plugin-milestones</id>
+			<name>Spring Plugin Milestones</name>
+			<url>http://maven.springframework.org/milestone/org/springframework/boot/spring-boot-maven-plugin/1.3.0.M5/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

@@ -1,0 +1,1 @@
+<pre>{{categoriesList | json}}</pre>
